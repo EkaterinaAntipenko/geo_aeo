@@ -1,0 +1,17 @@
+<h1><%= @conversation.title %></h1>
+
+<% if @conversation.site %>
+  <p>
+    <strong>Сайт:</strong>
+    <%= link_to @conversation.site.domain, site_path(@conversation.site) %>
+  </p>
+<% end %>
+
+<% @conversation.messages.each do |message| %>
+  <p>
+    <strong><%= message.role == "agent" ? "ИИ-агент" : @conversation.user.name %>:</strong>
+    <%= message.content %>
+  </p>
+<% end %>
+
+<%= link_to "Все диалоги", conversations_path %>

@@ -1,0 +1,45 @@
+<h1><%= @workspace.name %></h1>
+
+<p>
+  <strong>Юр. лицо:</strong>
+  <%= @workspace.legal_name %>
+</p>
+
+<p>
+  <strong>Сфера:</strong>
+  <%= @workspace.industry %>
+</p>
+
+<p>
+  <strong>Регион:</strong>
+  <%= @workspace.region %>
+</p>
+
+<h2>Команда</h2>
+
+<% @workspace.memberships.each do |membership| %>
+  <p><%= membership.user.name %> - <%= membership.role %></p>
+<% end %>
+
+<h2>Тариф</h2>
+
+<p>
+  <strong><%= @subscription.plan.name %></strong>,
+  <%= @subscription.plan.price_month %> ₽ в месяц,
+  статус: <%= @subscription.status %>
+</p>
+
+<ul>
+  <% @subscription.plan.features.each do |feature| %>
+    <li><%= feature %></li>
+  <% end %>
+</ul>
+
+<h2>Платежи</h2>
+
+<% @subscription.payments.each do |payment| %>
+  <p>
+    <%= payment.paid_at.strftime("%d.%m.%Y") %>:
+    <%= payment.amount %> <%= payment.currency %>, <%= payment.status %>
+  </p>
+<% end %>

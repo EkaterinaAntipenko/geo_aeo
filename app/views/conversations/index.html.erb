@@ -1,0 +1,8 @@
+<h1>Диалоги с ИИ-агентом</h1>
+
+<% @conversations.each do |conversation| %>
+  <p>
+    <%= link_to conversation.title, conversation_path(conversation) %>
+    <%= "- #{conversation.site.domain}" if conversation.site %>
+  </p>
+<% end %>

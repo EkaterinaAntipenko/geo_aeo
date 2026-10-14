@@ -1,0 +1,75 @@
+<h1><%= @site.domain %></h1>
+
+<p>
+  <strong>CMS:</strong>
+  <%= @site.cms %>
+</p>
+
+<p>
+  <strong>Регион:</strong>
+  <%= @site.region %>
+</p>
+
+<p>
+  <strong>GEO:</strong> <%= @site.geo_score %>
+  <strong>AEO:</strong> <%= @site.aeo_score %>
+  <strong>SEO:</strong> <%= @site.seo_score %>
+</p>
+
+<h2>Страницы</h2>
+
+<% @site.pages.each do |page| %>
+  <p>
+    <%= link_to page.title, page.url %>
+    - <%= page.page_type %>, оценка: <%= page.score %>, разметка: <%= page.has_schema ? "есть" : "нет" %>
+  </p>
+<% end %>
+
+<h2>Аудиты</h2>
+
+<% @site.audits.each do |audit| %>
+  <p>
+    <%= link_to "#{audit.kind.upcase}-аудит от #{audit.started_at.strftime('%d.%m.%Y')}", audit_path(audit) %>
+    - <%= audit.status %>
+  </p>
+<% end %>
+
+<h2>Запросы</h2>
+
+<% @site.queries.each do |query| %>
+  <p><%= link_to query.text, query_path(query) %> (<%= query.intent %>)</p>
+<% end %>
+
+<h2>Конкуренты</h2>
+
+<% @site.competitors.each do |competitor| %>
+  <p><%= competitor.name %> - <%= competitor.domain %></p>
+<% end %>
+
+<h2>Интеграции</h2>
+
+<% @site.integrations.each do |integration| %>
+  <p><%= integration.provider %> - <%= integration.status %></p>
+<% end %>
+
+<h2>Отчёты</h2>
+
+<% @site.reports.each do |report| %>
+  <p>
+    <strong><%= report.date_from.strftime("%d.%m") %>–<%= report.date_to.strftime("%d.%m.%Y") %>:</strong>
+    <%= report.summary %>
+  </p>
+<% end %>
+
+<h2>Проверки работоспособности</h2>
+
+<% @health_checks.each do |health_check| %>
+  <p>
+    <%= health_check.checked_at.strftime("%d.%m.%Y") %>:
+    HTTP <%= health_check.http_status %>,
+    ответ <%= health_check.response_ms %> мс,
+    LCP <%= health_check.lcp_ms %> мс
+  </p>
+<% end %>
+
+<%= link_to "Все сайты", sites_path %>

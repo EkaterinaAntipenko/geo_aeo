@@ -1,0 +1,39 @@
+<h1>Здравствуйте, <%= current_user.name %></h1>
+
+<p><%= current_workspace.name %>, <%= current_workspace.region %></p>
+
+<h2>Мои сайты</h2>
+
+<% @sites.each do |site| %>
+  <p>
+    <%= link_to site.domain, site_path(site) %>
+    - GEO <%= site.geo_score %>, AEO <%= site.aeo_score %>, SEO <%= site.seo_score %>
+  </p>
+<% end %>
+
+<h2>Последние аудиты</h2>
+
+<% @audits.each do |audit| %>
+  <p>
+    <%= link_to "#{audit.kind.upcase}-аудит #{audit.site.domain}", audit_path(audit) %>
+    - <%= audit.status %>
+  </p>
+<% end %>
+
+<h2>Задачи в работе</h2>
+
+<% @tasks.each do |task| %>
+  <p>
+    <%= link_to task.recommendation.title, audit_issue_path(task.recommendation.issue.audit, task.recommendation.issue) %>
+    - <%= task.status %>
+  </p>
+<% end %>
+
+<h2>Уведомления</h2>
+
+<% @notifications.each do |notification| %>
+  <p>
+    <%= notification.payload["title"] %> (<%= notification.payload["site"] %>)
+    <%= "- новое" unless notification.is_read %>
+  </p>
+<% end %>

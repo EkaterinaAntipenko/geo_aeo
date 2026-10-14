@@ -1,0 +1,16 @@
+<nav class="menuBar">
+  <div>
+    <%= link_to "Главная", root_path %>
+    <%= link_to "Мои сайты", sites_path %>
+    <%= link_to "Аудиты", audits_path %>
+    <%= link_to "ИИ-агент", conversations_path %>
+    <%= link_to "Аккаунт", account_path %>
+  </div>
+
+  <div>
+    <%= current_user.name %>, <%= current_workspace.name %>
+    <%= link_to "Выйти", destroy_user_session_path, data: { turbo_method: :delete } %>
+  </div>
+</nav>
+
+<hr>
