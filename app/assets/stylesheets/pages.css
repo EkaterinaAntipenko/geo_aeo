@@ -378,14 +378,14 @@
   padding: 0;
   border: 0;
   background: none;
-  transition: transform 0.35s var(--ease);
 }
 
 .chat-send img {
   width: 45px;
+  transition: transform 0.35s var(--ease);
 }
 
-.chat-send:hover {
+.chat-send:hover img {
   transform: translateX(3px) rotate(-12deg);
 }
 
@@ -529,15 +529,15 @@
   top: 50%;
   right: 35px;
   transform: translateY(-50%);
-  transition: transform 0.3s var(--ease);
-}
-
-.profile-edit:hover {
-  transform: translateY(-50%) rotate(-12deg) scale(1.1);
 }
 
 .profile-edit img {
   width: 30px;
+  transition: transform 0.3s var(--ease);
+}
+
+.profile-edit:hover img {
+  transform: rotate(-12deg) scale(1.1);
 }
 
 .settings-col {

@@ -173,11 +173,18 @@
   width: 61px;
   height: 61px;
   border-radius: 50%;
-  transition: box-shadow 0.3s, transform 0.3s var(--ease);
+  transition: box-shadow 0.3s;
+}
+
+.round-btn img {
+  transition: transform 0.3s var(--ease);
 }
 
 .round-btn:hover {
   box-shadow: var(--glow-strong);
+}
+
+.round-btn:hover img {
   transform: rotate(-8deg);
 }
 
@@ -405,6 +412,7 @@
 
 .float-img {
   transition: transform 0.6s var(--ease);
+  will-change: transform;
 }
 
 .glow-hover:hover .float-img {

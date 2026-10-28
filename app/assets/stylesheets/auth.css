@@ -36,6 +36,7 @@
   display: flex;
   width: max-content;
   animation: reviews-scroll 35s linear infinite;
+  will-change: transform;
 }
 
 @keyframes reviews-scroll {
@@ -59,11 +60,6 @@
   border-radius: 32px;
   background: #fff;
   color: rgba(0, 0, 0, 0.8);
-  transition: box-shadow 0.4s;
-}
-
-.review-card:hover {
-  box-shadow: inset 0 0 26px rgba(252, 97, 31, 0.28);
 }
 
 .review-head {
