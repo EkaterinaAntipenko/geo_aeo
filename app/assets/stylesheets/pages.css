@@ -233,7 +233,7 @@
 }
 
 .article h1 {
-  max-width: 600px;
+  max-width: min(600px, calc(100% - 150px));
   font-size: 40px;
   font-weight: 600;
 }
@@ -1026,7 +1026,7 @@
 
   .chips {
     flex-wrap: nowrap;
-    width: 100%;
+    width: calc(100% + 32px);
     margin: 0 -16px;
     padding: 0 16px;
     overflow-x: auto;
@@ -1052,21 +1052,31 @@
   }
 
   .tip-card {
-    height: 190px;
-    padding: 18px 20px 22px;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+    height: auto;
+    min-height: 168px;
+    padding: 16px 18px 18px;
+    border-radius: 20px;
   }
 
   .tip-card-img,
   .tip-wide .tip-card-img {
-    top: 12px;
-    bottom: auto;
-    right: 12px;
-    width: 120px;
-    height: 110px;
+    position: static;
+    align-self: flex-end;
+    width: 96px;
+    height: 86px;
+  }
+
+  .tip-card-text {
+    gap: 8px;
+    max-width: calc(100% - 104px);
+    margin-top: -26px;
   }
 
   .tip-card-text b {
-    font-size: 24px;
+    font-size: 22px;
     line-height: 26px;
   }
 
@@ -1076,7 +1086,7 @@
 
   .tip-meta {
     margin-top: 0;
-    font-size: 15px;
+    font-size: 14px;
   }
 
   .task-card h3 {
@@ -1090,7 +1100,7 @@
   }
 
   .article h1 {
-    padding-right: 80px;
+    max-width: calc(100% - 90px);
     font-size: 28px;
   }
 
