@@ -35,11 +35,7 @@
   position: relative;
   display: flex;
   width: max-content;
-  animation: reviews-scroll 45s linear infinite;
-}
-
-.reviews:hover .reviews-marquee {
-  animation-play-state: paused;
+  animation: reviews-scroll 35s linear infinite;
 }
 
 @keyframes reviews-scroll {
@@ -48,7 +44,7 @@
 
 .reviews-row {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   gap: 24px;
   padding-right: 24px;
 }
@@ -103,6 +99,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 32px;
+  margin-top: auto;
 }
 
 .rate {
