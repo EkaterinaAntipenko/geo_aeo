@@ -26,12 +26,13 @@
   </section>
 
   <section class="panel chart-panel appear">
+    <%= turbo_frame_tag "mentions_chart", class: "chart-frame" do %>
     <div class="chart-head">
       <h2 class="card-title">Кол-во упоминаний</h2>
       <div class="chart-controls">
-        <%= link_to "Подробнее", statistics_path, class: "pill" %>
+        <%= link_to "Подробнее", statistics_path, class: "pill", data: { turbo_frame: "_top" } %>
         <span class="pill pill-icon"><%= image_tag "okula/chart-type.svg", alt: "Линейный график" %></span>
-        <%= form_with url: root_path, method: :get, data: { controller: "autosubmit" } do %>
+        <%= form_with url: root_path, method: :get, data: { controller: "autosubmit", turbo_action: "advance" } do %>
           <%= select_tag :period, options_for_select([ [ "Год", "year" ], [ "Полгода", "half" ], [ "Квартал", "quarter" ] ], @period),
                 class: "pill pill-select", data: { action: "change->autosubmit#submit" } %>
         <% end %>
@@ -63,6 +64,7 @@
       </div>
     <% else %>
       <p class="empty-text">Здесь появится график, когда мы проверим ответы нейросетей по вашему сайту.</p>
+    <% end %>
     <% end %>
   </section>
 

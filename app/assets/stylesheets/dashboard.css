@@ -123,6 +123,13 @@
   min-height: 379px;
 }
 
+.chart-frame {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: inherit;
+}
+
 .chart-head {
   display: flex;
   flex-wrap: wrap;
