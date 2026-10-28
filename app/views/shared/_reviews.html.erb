@@ -1,31 +1,26 @@
-<section class="reviews" data-controller="carousel">
-  <div class="reviews-track">
-    <button type="button" class="reviews-arrow" data-action="carousel#prev" aria-label="Предыдущий отзыв">
-      <%= image_tag "okula/arrow-left.svg", alt: "" %>
-    </button>
+<% reviews = Review.order(:id).to_a %>
 
-    <div class="reviews-window">
-      <% Review.order(:id).each_with_index do |review, i| %>
-        <article class="review-card <%= 'active' if i.zero? %>" data-carousel-target="slide">
-          <div class="review-head">
-            <%= image_tag review.avatar.presence || "okula/review-avatar.png", alt: review.author, class: "review-photo" %>
-            <div>
-              <b><%= review.company %></b>
-              <span><%= review.author %>, <%= review.position %></span>
+<section class="reviews">
+  <div class="reviews-marquee">
+    <% 2.times do |copy| %>
+      <div class="reviews-row" aria-hidden="<%= copy == 1 %>">
+        <% reviews.each do |review| %>
+          <article class="review-card">
+            <div class="review-head">
+              <%= image_tag review.avatar.presence || "okula/review-avatar.png", alt: review.author, class: "review-photo" %>
+              <div>
+                <b><%= review.company %></b>
+                <span><%= review.author %>, <%= review.position %></span>
+              </div>
             </div>
-          </div>
-          <p><%= review.text %></p>
-          <div class="review-rates">
-            <span class="rate"><span class="rate-ring" style="--value: <%= review.geo_rate %>"><%= review.geo_rate %></span> GEO rate</span>
-            <span class="rate"><span class="rate-ring" style="--value: <%= review.aeo_rate %>"><%= review.aeo_rate %></span> AEO rate</span>
-          </div>
-        </article>
-      <% end %>
-    </div>
-
-    <button type="button" class="reviews-arrow" data-action="carousel#next" aria-label="Следующий отзыв">
-      <%= image_tag "okula/arrow-left.svg", alt: "", class: "flip" %>
-    </button>
+            <p><%= review.text %></p>
+            <div class="review-rates">
+              <span class="rate"><span class="rate-ring" style="--value: <%= review.geo_rate %>"><%= review.geo_rate %></span> GEO rate</span>
+              <span class="rate"><span class="rate-ring" style="--value: <%= review.aeo_rate %>"><%= review.aeo_rate %></span> AEO rate</span>
+            </div>
+          </article>
+        <% end %>
+      </div>
+    <% end %>
   </div>
-  <div class="reviews-peek"></div>
 </section>
