@@ -1,33 +1,43 @@
 <% content_for :title, "Задачи - Okula" %>
 <% breadcrumbs(["Задачи"]) %>
 
-<div class="board">
-  <% Task::STATUSES.each do |status, title| %>
-    <% tasks = @tasks.fetch(status, []) %>
-    <section class="board-column appear">
-      <h2 class="board-head board-head-<%= status %>">
-        <%= title %> <span><%= tasks.size %></span>
-      </h2>
+<div data-controller="tabs">
+  <nav class="board-tabs">
+    <% Task::STATUSES.each_with_index do |(status, title), i| %>
+      <button type="button" class="board-tab board-tab-<%= status %> <%= 'active' if i.zero? %>" data-tabs-target="tab" data-action="tabs#show">
+        <%= title %> <span><%= @tasks.fetch(status, []).size %></span>
+      </button>
+    <% end %>
+  </nav>
 
-      <div class="board-list">
-        <% tasks.each do |task| %>
-          <article class="task-card glow-hover">
-            <h3><%= task.title %></h3>
-            <p class="task-meta"><%= priority_bars task.priority %> Приоритет</p>
+  <div class="board">
+    <% Task::STATUSES.each_with_index do |(status, title), i| %>
+      <% tasks = @tasks.fetch(status, []) %>
+      <section class="board-column appear <%= 'active' if i.zero? %>" data-tabs-target="panel">
+        <h2 class="board-head board-head-<%= status %>">
+          <%= title %> <span><%= tasks.size %></span>
+        </h2>
 
-            <% if task.next_status %>
-              <%= button_to task_path(task, status: task.next_status), method: :patch, class: "task-move",
-                    title: "Перенести в «#{Task::STATUSES[task.next_status]}»" do %>
-                <%= image_tag "okula/chevron.svg", alt: "Дальше" %>
+        <div class="board-list">
+          <% tasks.each do |task| %>
+            <article class="task-card glow-hover">
+              <h3><%= task.title %></h3>
+              <p class="task-meta"><%= priority_bars task.priority %> Приоритет</p>
+
+              <% if task.next_status %>
+                <%= button_to task_path(task, status: task.next_status), method: :patch, class: "task-move",
+                      title: "Перенести в «#{Task::STATUSES[task.next_status]}»" do %>
+                  <%= image_tag "okula/chevron.svg", alt: "Дальше" %>
+                <% end %>
               <% end %>
-            <% end %>
-          </article>
-        <% end %>
+            </article>
+          <% end %>
 
-        <% if tasks.empty? %>
-          <p class="empty-text">Пока пусто</p>
-        <% end %>
-      </div>
-    </section>
-  <% end %>
+          <% if tasks.empty? %>
+            <p class="empty-text">Пока пусто</p>
+          <% end %>
+        </div>
+      </section>
+    <% end %>
+  </div>
 </div>

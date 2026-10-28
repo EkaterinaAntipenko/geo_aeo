@@ -12,6 +12,54 @@
   min-width: 0;
 }
 
+.board-tabs {
+  display: none;
+}
+
+.board-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-width: 0;
+  height: 58px;
+  padding: 0 2px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--panel);
+  color: var(--text-60);
+  font-size: clamp(11px, 3.5vw, 15px);
+  font-weight: 600;
+  white-space: nowrap;
+  transition: box-shadow 0.3s, background 0.3s, border-color 0.3s, color 0.3s;
+}
+
+.board-tab span {
+  color: var(--text-30);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.board-tab.active {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(60, 60, 60, 0.55);
+  box-shadow: inset 0 0 26px rgba(255, 255, 255, 0.18);
+}
+
+.board-tab-doing.active {
+  border-color: rgba(200, 196, 58, 0.55);
+  background: rgba(70, 68, 18, 0.55);
+  box-shadow: inset 0 0 26px rgba(200, 196, 58, 0.35);
+}
+
+.board-tab-done.active {
+  border-color: rgba(63, 201, 77, 0.55);
+  background: rgba(18, 60, 22, 0.55);
+  box-shadow: inset 0 0 26px rgba(63, 201, 77, 0.35);
+}
+
 .board-head {
   display: flex;
   align-items: center;
@@ -965,19 +1013,28 @@
 }
 
 @media (max-width: 900px) {
+  .board-tabs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+
   .board {
-    display: flex;
-    gap: 14px;
-    margin: 0 -16px;
-    padding: 0 16px 8px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
+    display: block;
+    padding: 0;
   }
 
   .board-column {
-    flex: none;
-    width: 84vw;
-    scroll-snap-align: start;
+    display: none;
+  }
+
+  .board-column.active {
+    display: flex;
+  }
+
+  .board-head {
+    display: none;
   }
 
   .board-list {
@@ -1090,12 +1147,6 @@
   }
 
   .task-card h3 {
-    font-size: 19px;
-  }
-
-  .board-head {
-    height: 54px;
-    padding: 0 20px;
     font-size: 19px;
   }
 
