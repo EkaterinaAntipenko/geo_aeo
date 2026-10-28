@@ -1,8 +1,21 @@
-<h1>Диалоги с ИИ-агентом</h1>
+<% content_for :title, "Помощник - Okula" %>
+<% breadcrumbs(["Помощник"]) %>
 
-<% @conversations.each do |conversation| %>
-  <p>
-    <%= link_to conversation.title, conversation_path(conversation) %>
-    <%= "- #{conversation.site.domain}" if conversation.site %>
-  </p>
-<% end %>
+<section class="glow-panel assistant-empty">
+  <%= image_tag "okula/logo-3d.png", alt: "", class: "assistant-logo float-img" %>
+  <h1>Объясню что-угодно</h1>
+
+  <%= form_with url: conversations_path, class: "chat-input" do %>
+    <%= image_tag "okula/plus.svg", alt: "", class: "chat-plus" %>
+    <%= text_field_tag :question, nil, placeholder: "Спроси о чем-либо", autocomplete: "off", required: true %>
+    <button type="submit" class="chat-send" aria-label="Отправить"><%= image_tag "okula/send.svg", alt: "" %></button>
+  <% end %>
+
+  <% if @conversations.any? %>
+    <div class="recent-chats">
+      <% @conversations.each do |conversation| %>
+        <%= link_to conversation.title, conversation_path(conversation), class: "chip" %>
+      <% end %>
+    </div>
+  <% end %>
+</section>

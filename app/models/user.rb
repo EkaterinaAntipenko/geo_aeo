@@ -1,5 +1,7 @@
 class User < ApplicationRecord
-  devise :database_authenticatable, :recoverable, :rememberable, :validatable
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
+
+  ROLES = { "owner" => "Владелец", "admin" => "Администратор", "marketer" => "Маркетолог", "developer" => "Разработчик" }
 
   has_many :memberships, dependent: :destroy
   has_many :workspaces, through: :memberships
@@ -13,5 +15,16 @@ class User < ApplicationRecord
   has_many :added_competitors, class_name: "Competitor", foreign_key: :added_by, dependent: :destroy
 
   validates :name, presence: true
-  validates :role, inclusion: { in: %w[owner admin marketer developer] }
+  validates :role, inclusion: { in: ROLES.keys }
+  attr_accessor :terms
+
+  validates :terms, acceptance: { message: "нужно принять" }
+
+  def role_name
+    ROLES[role]
+  end
+
+  def initials
+    name.split.map(&:first).first(2).join
+  end
 end

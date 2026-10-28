@@ -1,0 +1,63 @@
+ru:
+  activerecord:
+    models:
+      user: Пользователь
+      site: Сайт
+      article: Совет
+      category: Категория
+    attributes:
+      user:
+        name: Имя
+        email: Email
+        phone: Телефон
+        password: Пароль
+        terms: Согласие на обработку данных
+        role: Роль
+      site:
+        domain: Ссылка на сайт
+        brand_name: Название бренда
+        pages_plan: Количество страниц
+        workspace: Компания
+      article:
+        title: Заголовок
+        lead: Подзаголовок
+        body: Текст
+        image: Картинка
+        read_time: Время чтения
+        category: Категория
+      category:
+        name: Название
+    errors:
+      messages:
+        record_invalid: "Ошибка: %{errors}"
+        restrict_dependent_destroy:
+          has_many: "Нельзя удалить, есть связанные записи: %{record}"
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      accepted: нужно принять
+      blank: не может быть пустым
+      present: должно быть пустым
+      taken: уже занят
+      invalid: указан неверно
+      inclusion: имеет неверное значение
+      exclusion: имеет зарезервированное значение
+      required: нужно указать
+      confirmation: не совпадает
+      too_short: слишком короткий (не меньше %{count} символов)
+      too_long: слишком длинный (не больше %{count} символов)
+      not_a_number: должно быть числом
+      not_an_integer: должно быть целым числом
+      greater_than: должно быть больше %{count}
+      greater_than_or_equal_to: должно быть не меньше %{count}
+      less_than: должно быть меньше %{count}
+      less_than_or_equal_to: должно быть не больше %{count}
+      other_than: должно отличаться от %{count}
+      in: должно быть в диапазоне %{count}
+  helpers:
+    select:
+      prompt: Выберите
+    submit:
+      create: Создать
+      update: Сохранить
+      submit: Сохранить

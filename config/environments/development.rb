@@ -31,8 +31,21 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
-  # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  if ENV["SMTP_USERNAME"].present?
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.raise_delivery_errors = true
+    config.action_mailer.smtp_settings = {
+      address: ENV.fetch("SMTP_ADDRESS", "smtp.yandex.ru"),
+      port: 465,
+      user_name: ENV["SMTP_USERNAME"],
+      password: ENV["SMTP_PASSWORD"],
+      authentication: :plain,
+      ssl: true
+    }
+  else
+    config.action_mailer.delivery_method = :file
+    config.action_mailer.raise_delivery_errors = false
+  end
 
   # Make template changes take effect immediately.
   config.action_mailer.perform_caching = false

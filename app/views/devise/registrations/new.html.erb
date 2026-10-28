@@ -1,0 +1,52 @@
+<% content_for :title, "Регистрация - Okula" %>
+
+<div class="auth">
+  <%= render "shared/reviews" %>
+
+  <section class="auth-panel">
+    <h1>Начните работу с Okula</h1>
+    <p class="subtitle">Помогите ИИ увидеть ваш сайт</p>
+
+    <%= link_to yandex_auth_path, class: "btn btn-yandex" do %>
+      <span class="yandex-icon">Я</span> Продолжить с Яндекс ID
+    <% end %>
+
+    <p class="divider"><span>Или</span></p>
+
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "auth-form" }) do |f| %>
+      <% if resource.errors.any? %>
+        <div class="form-errors">
+          <% resource.errors.full_messages.each do |message| %>
+            <p><%= message %></p>
+          <% end %>
+        </div>
+      <% end %>
+
+      <div class="field-row">
+        <div class="field">
+          <%= f.label :name, "Имя" %>
+          <%= f.text_field :name, placeholder: "Имя", autocomplete: "name", required: true %>
+        </div>
+
+        <div class="field">
+          <%= f.label :phone, "Телефон" %>
+          <%= f.telephone_field :phone, placeholder: "+7 (   )   -   -", autocomplete: "tel", data: { controller: "phone-mask", action: "input->phone-mask#format" } %>
+        </div>
+      </div>
+
+      <div class="field">
+        <%= f.label :email, "Email" %>
+        <%= f.email_field :email, placeholder: "name@company.ru", autocomplete: "email", required: true %>
+      </div>
+
+      <label class="checkbox">
+        <%= f.check_box :terms %>
+        <span>Я даю согласие на обработку и передачу моих персональных данных и подтверждаю, что ознакомлен(а) с Политикой конфиденциальности</span>
+      </label>
+
+      <%= f.submit "Зарегистрироваться", class: "btn btn-primary btn-big" %>
+    <% end %>
+
+    <p class="auth-switch">Уже есть аккаунт? <%= link_to "Войти", new_user_session_path %></p>
+  </section>
+</div>

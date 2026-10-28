@@ -1,0 +1,7 @@
+<% content_for :title, "Редактирование - Okula" %>
+<% breadcrumbs(["Админка", admin_root_path], [@article.title]) %>
+
+<section class="panel admin-panel appear">
+  <h1 class="card-title">Редактирование совета</h1>
+  <%= render "form", article: @article %>
+</section>

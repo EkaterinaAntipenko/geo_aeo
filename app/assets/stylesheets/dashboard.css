@@ -1,0 +1,328 @@
+.dashboard {
+  display: grid;
+  grid-template-columns: 337px minmax(0, 413px) minmax(0, 1fr);
+  grid-template-areas:
+    "score tips tips"
+    "chart chart pages";
+  gap: 28px 32px;
+}
+
+.score-wrap {
+  grid-area: score;
+  position: relative;
+}
+
+.score-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 261px;
+  padding: 32px 25px;
+  border-radius: var(--radius-panel);
+  background: var(--panel);
+  box-shadow: var(--glow-green);
+  -webkit-mask: radial-gradient(circle 37px at calc(100% - 26px) calc(100% - 28px), transparent 97%, #000 100%);
+  mask: radial-gradient(circle 37px at calc(100% - 26px) calc(100% - 28px), transparent 97%, #000 100%);
+  transition: box-shadow 0.4s;
+}
+
+.score-wrap:hover .score-card {
+  box-shadow: inset 0 0 46px rgba(116, 232, 81, 0.5);
+}
+
+.score-value {
+  margin-top: 9px;
+  color: var(--green);
+  font-size: 77.5px;
+  font-weight: 500;
+  line-height: 1.1;
+  text-shadow: 0 0 30px rgba(126, 255, 87, 0.35);
+}
+
+.score-text {
+  max-width: 225px;
+  color: var(--text-60);
+  font-size: 14.8px;
+  line-height: 1.04;
+}
+
+.score-link {
+  position: absolute;
+  right: 3.5px;
+  bottom: 5.5px;
+  display: grid;
+  place-items: center;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.35s var(--ease), box-shadow 0.35s;
+}
+
+.score-link img {
+  width: 10px;
+}
+
+.score-wrap:hover .score-link {
+  transform: translateX(3px);
+  box-shadow: inset 0 0 12px rgba(252, 97, 31, 0.55);
+}
+
+.tips-panel {
+  grid-area: tips;
+  display: flex;
+  gap: 47px;
+  height: 261px;
+  padding: 25px 0 24px 30px;
+  overflow: hidden;
+}
+
+.tips-panel .card-title {
+  flex: none;
+  width: 105px;
+}
+
+.tips-row {
+  display: flex;
+  gap: 13px;
+  min-width: 0;
+  overflow-x: auto;
+  padding-right: 30px;
+  scrollbar-width: none;
+}
+
+.tips-row::-webkit-scrollbar {
+  display: none;
+}
+
+.tip-mini {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 204px;
+  height: 211px;
+  padding: 13px 17px 17px;
+  border-radius: var(--radius-card);
+  background: rgba(255, 255, 255, 0.05);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.tip-mini-img {
+  height: 134px;
+  object-fit: contain;
+  align-self: center;
+}
+
+.chart-panel {
+  grid-area: chart;
+  display: flex;
+  flex-direction: column;
+  gap: 42px;
+  min-height: 379px;
+}
+
+.chart-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.chart-controls {
+  display: flex;
+  align-items: center;
+  gap: 17px;
+}
+
+.chart-controls form {
+  margin: 0;
+}
+
+.chart {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  gap: 24px 16px;
+}
+
+.chart-axis {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 190px;
+  color: var(--text-60);
+  font-size: 13px;
+  text-align: center;
+}
+
+.chart-axis span {
+  line-height: 0;
+}
+
+.chart-svg {
+  width: 100%;
+  height: 190px;
+  overflow: visible;
+}
+
+.chart-grid {
+  stroke: rgba(255, 255, 255, 0.06);
+  stroke-width: 1;
+}
+
+.chart-line {
+  fill: none;
+  stroke: var(--orange);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  filter: drop-shadow(0 0 10px rgba(252, 97, 31, 0.55));
+  animation: draw 1.8s var(--ease) both;
+  vector-effect: non-scaling-stroke;
+}
+
+.chart-months {
+  grid-column: 2;
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-60);
+  font-size: 13px;
+}
+
+.pages-panel {
+  grid-area: pages;
+  display: flex;
+  flex-direction: column;
+  gap: 37px;
+  min-height: 379px;
+}
+
+.ranking {
+  display: flex;
+  flex-direction: column;
+  gap: 21px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ranking li {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 50px;
+  padding: 0 15px;
+  border-radius: 11px;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+.ranking li.first,
+.ranking li:hover {
+  background: var(--panel-light);
+}
+
+.ranking li:hover {
+  box-shadow: var(--glow);
+}
+
+.rank {
+  width: 24px;
+  font-size: 32px;
+}
+
+.trend {
+  width: 9px;
+  align-self: flex-start;
+  margin-top: 12px;
+}
+
+.rank-title {
+  margin-left: 16px;
+  color: var(--text-60);
+  font-size: 18px;
+}
+
+@media (max-width: 1400px) {
+  .dashboard {
+    grid-template-columns: 337px minmax(0, 1fr);
+    grid-template-areas:
+      "score tips"
+      "chart chart"
+      "pages pages";
+  }
+}
+
+@media (max-width: 720px) {
+  .dashboard {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "score" "tips" "chart" "pages";
+    gap: 16px;
+  }
+
+  .score-card {
+    height: 220px;
+  }
+
+  .score-value {
+    font-size: 64px;
+  }
+
+  .tips-panel {
+    flex-direction: column;
+    gap: 16px;
+    height: auto;
+    padding: 20px 0 20px 20px;
+  }
+
+  .tip-mini {
+    width: 160px;
+    height: 180px;
+  }
+
+  .tip-mini-img {
+    height: 100px;
+  }
+
+  .panel {
+    padding: 20px;
+  }
+
+  .chart-panel {
+    gap: 24px;
+    min-height: 0;
+  }
+
+  .chart {
+    grid-template-columns: 34px minmax(0, 1fr);
+    gap: 14px 8px;
+  }
+
+  .chart-axis,
+  .chart-months {
+    font-size: 10px;
+  }
+
+  .chart-svg,
+  .chart-axis {
+    height: 150px;
+  }
+
+  .chart-months span:nth-child(even) {
+    visibility: hidden;
+  }
+
+  .pages-panel {
+    gap: 20px;
+    min-height: 0;
+  }
+
+  .rank {
+    font-size: 26px;
+  }
+
+  .rank-title {
+    font-size: 15px;
+  }
+}

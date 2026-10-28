@@ -1,0 +1,33 @@
+<% content_for :title, "Задачи - Okula" %>
+<% breadcrumbs(["Задачи"]) %>
+
+<div class="board">
+  <% Task::STATUSES.each do |status, title| %>
+    <% tasks = @tasks.fetch(status, []) %>
+    <section class="board-column appear">
+      <h2 class="board-head board-head-<%= status %>">
+        <%= title %> <span><%= tasks.size %></span>
+      </h2>
+
+      <div class="board-list">
+        <% tasks.each do |task| %>
+          <article class="task-card glow-hover">
+            <h3><%= task.title %></h3>
+            <p class="task-meta"><%= priority_bars task.priority %> Приоритет</p>
+
+            <% if task.next_status %>
+              <%= button_to task_path(task, status: task.next_status), method: :patch, class: "task-move",
+                    title: "Перенести в «#{Task::STATUSES[task.next_status]}»" do %>
+                <%= image_tag "okula/chevron.svg", alt: "Дальше" %>
+              <% end %>
+            <% end %>
+          </article>
+        <% end %>
+
+        <% if tasks.empty? %>
+          <p class="empty-text">Пока пусто</p>
+        <% end %>
+      </div>
+    </section>
+  <% end %>
+</div>

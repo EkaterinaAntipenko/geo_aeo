@@ -1,0 +1,8 @@
+<% content_for :title, "Страница в разработке - Okula" %>
+<% breadcrumbs(["Страница в разработке"]) if user_signed_in? %>
+
+<section class="glow-panel glow-center not-found">
+  <%= image_tag "okula/404.png", alt: "404", class: "not-found-img float-img" %>
+  <h1>Эта страница находится в разработке</h1>
+  <%= link_to "На главную", user_signed_in? ? root_path : new_user_session_path, class: "btn btn-primary" %>
+</section>

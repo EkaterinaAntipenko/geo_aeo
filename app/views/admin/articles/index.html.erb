@@ -1,0 +1,38 @@
+<% content_for :title, "Админка - Okula" %>
+<% breadcrumbs(["Админка", admin_root_path], ["Советы"]) %>
+
+<%= render "admin/tabs" %>
+
+<section class="panel appear">
+  <div class="admin-head">
+    <h1 class="card-title">Советы</h1>
+    <%= link_to "+ Новый совет", new_admin_article_path, class: "btn btn-primary" %>
+  </div>
+
+  <table class="admin-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Заголовок</th>
+        <th>Категория</th>
+        <th>Время чтения</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @articles.each do |article| %>
+        <tr>
+          <td><%= image_tag article.image, alt: "", class: "admin-thumb" %></td>
+          <td><%= link_to article.title, article_path(article) %></td>
+          <td class="muted"><%= article.category.name %></td>
+          <td class="muted"><%= article.read_time %> мин</td>
+          <td class="admin-actions">
+            <%= link_to "Изменить", edit_admin_article_path(article), class: "pill" %>
+            <%= button_to "Удалить", admin_article_path(article), method: :delete, class: "pill pill-danger",
+                  form: { data: { turbo_confirm: "Удалить совет «#{article.title}»?" } } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</section>

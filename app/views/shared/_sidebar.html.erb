@@ -1,0 +1,49 @@
+<aside class="sidebar">
+  <%= render "shared/logo" %>
+
+  <% if current_site %>
+    <details class="site-switch">
+      <summary>
+        <span class="site-letter"><%= current_site.domain.first.upcase %></span>
+        <span class="site-name">
+          <b><%= current_site.domain %></b>
+          <small><%= current_site == current_workspace.sites.order(:created_at).first ? "основной сайт" : "сайт" %></small>
+        </span>
+        <%= image_tag "okula/chevron.svg", alt: "", class: "site-chevron" %>
+      </summary>
+
+      <div class="site-menu">
+        <% current_workspace.sites.order(:created_at).each do |site| %>
+          <%= button_to site.domain, select_site_path(site), class: class_names("site-option", active: site == current_site) %>
+        <% end %>
+        <%= link_to "+ Подключить сайт", new_onboarding_path, class: "site-option site-add" %>
+      </div>
+    </details>
+  <% else %>
+    <%= link_to new_onboarding_path, class: "site-switch site-switch-empty" do %>
+      <span class="site-letter">+</span>
+      <span class="site-name"><b>Подключить сайт</b><small>займёт минуту</small></span>
+    <% end %>
+  <% end %>
+
+  <nav class="side-nav">
+    <div class="side-nav-main">
+      <%= nav_item "Дашборд", "icon-dashboard.svg", root_path, active: controller_name == "dashboard" %>
+      <%= nav_item "Статистика", "icon-stats.svg", statistics_path %>
+      <%= nav_item "Задачи", "icon-tasks.svg", tasks_path, active: controller_name == "tasks" %>
+      <%= nav_item "Советы", "icon-tips.svg", articles_path, active: controller_name == "articles" %>
+      <%= nav_item "Помощник", "icon-assistant.svg", conversations_path, active: controller_name == "conversations" %>
+      <%= nav_item "API", "icon-api.svg", api_path %>
+    </div>
+
+    <div class="side-nav-bottom">
+      <% if current_user.admin? %>
+        <%= link_to "Админка", admin_root_path, class: class_names("nav-small", active: controller_path.start_with?("admin")) %>
+      <% end %>
+      <%= link_to account_path, class: class_names("nav-small", active: controller_name == "accounts") do %>
+        <%= image_tag "okula/icon-settings.svg", alt: "" %> Настройки
+      <% end %>
+      <%= button_to "Выйти", destroy_user_session_path, method: :delete, class: "nav-small nav-logout" %>
+    </div>
+  </nav>
+</aside>

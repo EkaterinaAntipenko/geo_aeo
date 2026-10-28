@@ -1,17 +1,33 @@
-<h1><%= @conversation.title %></h1>
+<% content_for :title, "Помощник - Okula" %>
+<% breadcrumbs(["Помощник", conversations_path], [@conversation.title]) %>
 
-<% if @conversation.site %>
-  <p>
-    <strong>Сайт:</strong>
-    <%= link_to @conversation.site.domain, site_path(@conversation.site) %>
-  </p>
-<% end %>
+<section class="glow-panel chat">
+  <div class="chat-messages" data-controller="scroll-bottom">
+    <% @conversation.messages.order(:created_at).each do |message| %>
+      <% if message.role == "user" %>
+        <div class="bubble appear">
+          <p><%= message.content %></p>
+          <time><%= message.created_at.strftime("%H:%M") %></time>
+        </div>
+      <% else %>
+        <div class="answer appear">
+          <h3><%= image_tag "okula/logo-3d.png", alt: "" %> <%= message.title %></h3>
+          <%= simple_format message.content %>
 
-<% @conversation.messages.each do |message| %>
-  <p>
-    <strong><%= message.role == "agent" ? "ИИ-агент" : @conversation.user.name %>:</strong>
-    <%= message.content %>
-  </p>
-<% end %>
+          <div class="answer-actions">
+            <%= button_to "Добавить задачу", tasks_path, params: { title: message.article&.title || @conversation.title }, class: "btn btn-small" %>
+            <% if message.article %>
+              <%= link_to "Открыть совет", article_path(message.article), class: "link-muted" %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
 
-<%= link_to "Все диалоги", conversations_path %>
+  <%= form_with url: conversation_messages_path(@conversation), class: "chat-input" do %>
+    <%= image_tag "okula/plus.svg", alt: "", class: "chat-plus" %>
+    <%= text_field_tag :question, nil, placeholder: "Спроси о чем-либо", autocomplete: "off", required: true %>
+    <button type="submit" class="chat-send" aria-label="Отправить"><%= image_tag "okula/send.svg", alt: "" %></button>
+  <% end %>
+</section>

@@ -1,10 +1,7 @@
 class SitesController < ApplicationController
-  def index
-    @sites = current_workspace.sites.order(:domain)
-  end
-
-  def show
-    @site = current_workspace.sites.find(params[:id])
-    @health_checks = @site.health_checks.order(checked_at: :desc).limit(7)
+  def select
+    site = current_workspace.sites.find(params[:id])
+    session[:site_id] = site.id
+    redirect_back fallback_location: root_path
   end
 end

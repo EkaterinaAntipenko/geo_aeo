@@ -1,0 +1,16 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="65.3354" height="19.8363" viewBox="0 0 65.3354 19.8363" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="Frame 2136141531">
+<g id="Vector 14">
+<use xlink:href="#stroke0_0_44" stroke="#FC611F"/>
+<use xlink:href="#stroke0_0_44" stroke="url(#paint0_linear_0_44)" stroke-opacity="0.3"/>
+</g>
+<path id="Arrow 3 (Stroke)" d="M65.1045 6.8509C65.4124 7.15885 65.4124 7.65786 65.1045 7.96587L60.0856 12.9854C59.7776 13.2934 59.278 13.2934 58.97 12.9854L53.9511 7.96649C53.6431 7.6585 53.6431 7.1589 53.9511 6.8509C54.259 6.54296 54.758 6.54304 55.066 6.8509L59.5278 11.312L63.9889 6.8509C64.2969 6.5429 64.7965 6.5429 65.1045 6.8509Z" fill="#A4A4A4"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_0_44" x1="23.0736" y1="3.17342" x2="19.3604" y2="20.1194" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="#FC611F"/>
+</linearGradient>
+<path id="stroke0_0_44" d="M1.45212 14.2641C12.1031 14.7468 8.24986 5.01116 13.5537 4.58311C19.4284 4.109 17.4231 13.5815 20.8113 14.2651C24.6836 15.0464 26.5849 5.53494 30.0081 5.57203" stroke-width="2.90419" stroke-linecap="round"/>
+</defs>
+</svg>

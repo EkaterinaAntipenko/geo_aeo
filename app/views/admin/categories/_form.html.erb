@@ -1,0 +1,19 @@
+<%= form_with model: [ :admin, category ], class: "admin-form" do |f| %>
+  <% if category.errors.any? %>
+    <div class="form-errors">
+      <% category.errors.full_messages.each do |message| %>
+        <p><%= message %></p>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name, "Название" %>
+    <%= f.text_field :name, placeholder: "Например, Технологии" %>
+  </div>
+
+  <div class="admin-form-actions">
+    <%= f.submit "Сохранить", class: "btn btn-primary" %>
+    <%= link_to "Отмена", admin_categories_path, class: "link-muted" %>
+  </div>
+<% end %>

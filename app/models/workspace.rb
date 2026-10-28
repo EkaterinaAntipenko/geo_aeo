@@ -8,10 +8,9 @@ class Workspace < ApplicationRecord
   has_many :audits, through: :sites
   has_many :issues, through: :audits
   has_many :recommendations, through: :issues
-  has_many :tasks, through: :recommendations
+  has_many :tasks, through: :sites
   has_many :queries, through: :sites
 
   validates :name, presence: true
   validates :industry, presence: true
-  validates :region, presence: true
 end

@@ -1,24 +1,32 @@
-<h2>Вход в личный кабинет</h2>
+<% content_for :title, "Вход - Okula" %>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email, "Почта" %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+<div class="auth">
+  <%= render "shared/reviews" %>
 
-  <div class="field">
-    <%= f.label :password, "Пароль" %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
+  <section class="auth-panel">
+    <h1>Войти в аккаунт</h1>
 
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me, "Запомнить меня" %>
-    </div>
-  <% end %>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "auth-form" }) do |f| %>
+      <div class="field">
+        <%= f.label :email, "Email" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "name@company.ru" %>
+      </div>
 
-  <div class="actions">
-    <%= f.submit "Войти" %>
-  </div>
-<% end %>
+      <div class="field">
+        <%= f.label :password, "Пароль" %>
+        <%= f.password_field :password, autocomplete: "current-password" %>
+      </div>
+
+      <% if devise_mapping.rememberable? %>
+        <label class="checkbox">
+          <%= f.check_box :remember_me %>
+          <span>Запомнить меня</span>
+        </label>
+      <% end %>
+
+      <%= f.submit "Войти", class: "btn btn-primary btn-big" %>
+    <% end %>
+
+    <p class="auth-switch">Еще нет аккаунта? <%= link_to "Зарегистрироваться", new_user_registration_path %></p>
+  </section>
+</div>

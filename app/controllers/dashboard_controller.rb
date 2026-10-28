@@ -1,8 +1,16 @@
 class DashboardController < ApplicationController
+  PERIODS = { "year" => 12, "half" => 6, "quarter" => 3 }
+
   def index
-    @sites = current_workspace.sites.order(:domain)
-    @audits = current_workspace.audits.order(started_at: :desc).limit(5)
-    @tasks = current_workspace.tasks.where.not(status: "done")
-    @notifications = current_user.notifications.order(created_at: :desc).limit(5)
+    @period = PERIODS.key?(params[:period]) ? params[:period] : "year"
+    @articles = Article.order(:created_at).limit(6)
+
+    if current_site
+      @mentions = current_site.mentions_by_month(PERIODS[@period])
+      @queries = current_site.queries.where(is_tracked: true).sort_by { |query| query.current_position || 100 }.first(4)
+    else
+      @mentions = []
+      @queries = []
+    end
   end
 end

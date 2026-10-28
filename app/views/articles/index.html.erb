@@ -1,0 +1,36 @@
+<% content_for :title, "Советы - Okula" %>
+<% breadcrumbs(["Советы"]) %>
+
+<div class="tips-toolbar">
+  <nav class="chips">
+    <%= link_to "Все советы", articles_path(q: params[:q]), class: class_names("chip", active: @category.nil?) %>
+    <% @categories.each do |category| %>
+      <%= link_to category.name, articles_path(category_id: category.id, q: params[:q]), class: class_names("chip", active: category == @category) %>
+    <% end %>
+  </nav>
+
+  <%= form_with url: articles_path, method: :get, class: "search-field" do %>
+    <%= hidden_field_tag :category_id, @category&.id %>
+    <%= image_tag "okula/icon-search.svg", alt: "" %>
+    <%= search_field_tag :q, params[:q], placeholder: "Найти совет" %>
+  <% end %>
+</div>
+
+<div class="tips-grid">
+  <% @articles.each_with_index do |article, i| %>
+    <%= link_to article_path(article), class: "tip-card tip-#{article_card_size(i)} glow-hover appear" do %>
+      <%= image_tag article.image, alt: "", class: "tip-card-img float-img" %>
+      <span class="tip-card-text">
+        <b><%= article.title %></b>
+        <% if article_card_size(i) == "wide" && article.lead.present? %>
+          <span class="tip-lead"><%= article.lead %></span>
+        <% end %>
+        <span class="tip-meta"><%= article.category.name %> · <%= article.read_time %> мин</span>
+      </span>
+    <% end %>
+  <% end %>
+</div>
+
+<% if @articles.empty? %>
+  <p class="empty-text">Ничего не нашли. Попробуйте другой запрос.</p>
+<% end %>

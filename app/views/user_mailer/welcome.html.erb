@@ -1,0 +1,12 @@
+<h1 style="font-family: Arial, sans-serif; color: #0a0a0a;">Здравствуйте, <%= @user.name %>!</h1>
+
+<p style="font-family: Arial, sans-serif; font-size: 16px;">Вы зарегистрировались в Okula. Данные для входа:</p>
+
+<p style="font-family: Arial, sans-serif; font-size: 16px;">
+  <strong>Логин:</strong> <%= @user.email %><br>
+  <strong>Пароль:</strong> <%= @password %>
+</p>
+
+<p style="font-family: Arial, sans-serif; font-size: 16px;">
+  <%= link_to "Войти в личный кабинет", new_user_session_url, style: "color: #fc611f;" %>
+</p>

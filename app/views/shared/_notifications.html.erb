@@ -1,0 +1,38 @@
+<% notifications = current_user.notifications.order(created_at: :desc).limit(10) %>
+<% unread = notifications.count { |n| !n.is_read } %>
+
+<div data-controller="modal">
+  <button type="button" class="round-btn bell" aria-label="Уведомления" data-action="modal#open">
+    <%= image_tag(unread.positive? ? "okula/bell.svg" : "okula/bell-empty.svg", alt: "") %>
+  </button>
+
+  <dialog class="modal" data-modal-target="dialog" data-action="click->modal#backdrop">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h2 class="card-title">Уведомления</h2>
+        <button type="button" class="modal-close" aria-label="Закрыть" data-action="modal#close"><i></i><i></i></button>
+      </div>
+
+      <% if notifications.any? %>
+        <ul class="notice-list">
+          <% notifications.each do |notification| %>
+            <li class="notice notice-<%= notification.type %> <%= 'unread' unless notification.is_read %>">
+              <span class="notice-dot"></span>
+              <div class="notice-body">
+                <p class="notice-type"><%= notification.type_name %> · <%= notification.site_domain %></p>
+                <p class="notice-title"><%= notification.title %></p>
+              </div>
+              <time class="notice-time"><%= l(notification.created_at, format: "%d.%m %H:%M") %></time>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="empty-text">Пока уведомлений нет. Сообщим, если с сайтом что-то случится.</p>
+      <% end %>
+
+      <% if unread.positive? %>
+        <%= button_to "Прочитать все", read_all_notifications_path, class: "btn btn-small" %>
+      <% end %>
+    </div>
+  </dialog>
+</div>

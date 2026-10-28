@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_13_114210) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_27_193318) do
   create_table "ai_engines", force: :cascade do |t|
     t.string "name"
     t.string "type"
@@ -18,6 +18,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_13_114210) do
     t.boolean "is_active"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "articles", force: :cascade do |t|
+    t.integer "category_id", null: false
+    t.string "title"
+    t.string "lead"
+    t.text "body"
+    t.string "image"
+    t.integer "read_time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_articles_on_category_id"
   end
 
   create_table "audits", force: :cascade do |t|
@@ -31,6 +43,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_13_114210) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["site_id"], name: "index_audits_on_site_id"
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "code_patches", force: :cascade do |t|
@@ -233,6 +251,18 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_13_114210) do
     t.index ["site_id"], name: "index_reports_on_site_id"
   end
 
+  create_table "reviews", force: :cascade do |t|
+    t.string "company"
+    t.string "author"
+    t.string "position"
+    t.text "text"
+    t.float "geo_rate"
+    t.float "aeo_rate"
+    t.string "avatar"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "sites", force: :cascade do |t|
     t.integer "workspace_id", null: false
     t.string "domain"
@@ -245,6 +275,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_13_114210) do
     t.float "seo_score"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "brand_name"
+    t.string "pages_plan"
     t.index ["domain"], name: "index_sites_on_domain", unique: true
     t.index ["workspace_id"], name: "index_sites_on_workspace_id"
   end
@@ -263,7 +295,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_13_114210) do
   end
 
   create_table "tasks", force: :cascade do |t|
-    t.integer "recommendation_id", null: false
+    t.integer "recommendation_id"
     t.integer "assignee_id"
     t.integer "created_by", null: false
     t.string "status"
@@ -271,9 +303,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_13_114210) do
     t.string "external_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "title"
+    t.integer "priority", default: 2
+    t.integer "site_id"
     t.index ["assignee_id"], name: "index_tasks_on_assignee_id"
     t.index ["created_by"], name: "index_tasks_on_created_by"
     t.index ["recommendation_id"], name: "index_tasks_on_recommendation_id"
+    t.index ["site_id"], name: "index_tasks_on_site_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -288,6 +324,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_13_114210) do
     t.string "avatar"
     t.string "role"
     t.string "telegram_id"
+    t.string "phone"
+    t.boolean "admin", default: false, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -303,6 +341,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_13_114210) do
     t.index ["owner_id"], name: "index_workspaces_on_owner_id"
   end
 
+  add_foreign_key "articles", "categories"
   add_foreign_key "audits", "sites"
   add_foreign_key "code_patches", "recommendations"
   add_foreign_key "competitors", "sites"
@@ -330,6 +369,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_13_114210) do
   add_foreign_key "subscriptions", "plans"
   add_foreign_key "subscriptions", "workspaces"
   add_foreign_key "tasks", "recommendations"
+  add_foreign_key "tasks", "sites"
   add_foreign_key "tasks", "users", column: "assignee_id"
   add_foreign_key "tasks", "users", column: "created_by"
   add_foreign_key "workspaces", "users", column: "owner_id"

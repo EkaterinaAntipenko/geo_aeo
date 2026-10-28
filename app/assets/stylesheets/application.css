@@ -1,21 +1,84 @@
-/*
- * This is a manifest file that'll be compiled into application.css.
- *
- * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
- * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
- * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
- * depending on specificity.
- *
- * Consider organizing styles into separate files for maintainability.
- */
-
-.menuBar {
-  display: flex;
-  justify-content: space-between;
+:root {
+  --bg: #0a0a0a;
+  --panel: #1b1b1b;
+  --panel-light: #2b2b2b;
+  --field: #323232;
+  --pill: #333;
+  --orange: #fc611f;
+  --orange-light: #ffa984;
+  --green: #7eff57;
+  --green-dark: #3fc94d;
+  --red: #bc1300;
+  --olive: #c8c43a;
+  --text: rgba(255, 255, 255, 0.9);
+  --text-60: rgba(255, 255, 255, 0.6);
+  --text-30: rgba(255, 255, 255, 0.3);
+  --line: rgba(255, 255, 255, 0.15);
+  --orange-line: rgba(252, 97, 31, 0.15);
+  --glow: inset 0 0 14.7px rgba(252, 97, 31, 0.24);
+  --glow-strong: inset 0 0 28px rgba(252, 97, 31, 0.42);
+  --glow-green: inset 0 0 33px rgba(116, 232, 81, 0.36);
+  --radius-panel: 25px;
+  --radius-card: 17.5px;
+  --radius-field: 12px;
+  --radius-pill: 65px;
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --pixels: url("okula/pixel-tile.svg");
 }
 
-.menuBar div {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.35;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+}
+
+button, input, select, textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.muted {
+  color: var(--text-30);
+}
+
+.empty-text {
+  color: var(--text-30);
+  font-size: 16px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
 }

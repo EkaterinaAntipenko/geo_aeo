@@ -1,0 +1,61 @@
+<% content_for :title, "Расскажите о проекте - Okula" %>
+
+<div class="onboarding">
+  <h1>Расскажите о вашем проекте</h1>
+  <p class="subtitle">Это позволит настроить GEO/AEO-оптимизацию</p>
+
+  <%= form_with model: @site, url: onboarding_path, class: "onboarding-grid" do |f| %>
+    <% if @site.errors.any? %>
+      <div class="form-errors">
+        <% @site.errors.full_messages.each do |message| %>
+          <p><%= message %></p>
+        <% end %>
+      </div>
+    <% end %>
+
+    <section class="panel onboarding-left">
+      <div class="field">
+        <%= f.label :domain, "Ссылка на сайт" %>
+        <%= f.text_field :domain, placeholder: "https://example.ru", required: true %>
+        <small>Проверим публичные страницы и найдём точки роста</small>
+      </div>
+
+      <div class="field">
+        <%= f.label :brand_name, "Название бренда" %>
+        <%= f.text_field :brand_name, placeholder: "Например, МИРК" %>
+        <small>Под этим названием будем искать упоминания в ответах ИИ</small>
+      </div>
+
+      <div class="field">
+        <%= label_tag :industry, "Род деятельности" %>
+        <%= text_area_tag :industry, params[:industry], placeholder: "Например, предоставляем услуги в сфере обучения", rows: 3 %>
+      </div>
+    </section>
+
+    <div class="onboarding-right">
+      <section class="panel">
+        <div class="field">
+          <%= label_tag :role, "Ваша роль в команде" %>
+          <div class="select-wrap">
+            <%= select_tag :role, options_for_select(User::ROLES.invert, params[:role]), prompt: "Выберите роль" %>
+          </div>
+        </div>
+
+        <fieldset class="field">
+          <legend>Какое количество страниц сайта вы планируете продвигать?</legend>
+          <% Site::PAGES_PLANS.each do |plan| %>
+            <label class="radio">
+              <%= f.radio_button :pages_plan, plan %>
+              <span><%= plan %></span>
+            </label>
+          <% end %>
+        </fieldset>
+      </section>
+
+      <%= button_tag class: "btn btn-primary btn-round btn-big" do %>
+        Начать работу <span class="arrow">→</span>
+      <% end %>
+      <%= link_to "Заполнить позже", root_path, class: "link-muted center" %>
+    </div>
+  <% end %>
+</div>

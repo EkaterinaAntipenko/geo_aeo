@@ -1,0 +1,56 @@
+<%= form_with model: [ :admin, article ], class: "admin-form" do |f| %>
+  <% if article.errors.any? %>
+    <div class="form-errors">
+      <% article.errors.full_messages.each do |message| %>
+        <p><%= message %></p>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title, "Заголовок" %>
+    <%= f.text_field :title, placeholder: "Например, Зачем сайту FAQ" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :lead, "Подзаголовок" %>
+    <%= f.text_field :lead, placeholder: "Одна строка, видна на большой карточке" %>
+  </div>
+
+  <div class="field-row">
+    <div class="field">
+      <%= f.label :category_id, "Категория" %>
+      <div class="select-wrap">
+        <%= f.collection_select :category_id, Category.order(:id), :id, :name %>
+      </div>
+    </div>
+
+    <div class="field">
+      <%= f.label :read_time, "Время чтения, мин" %>
+      <%= f.number_field :read_time, min: 1 %>
+    </div>
+  </div>
+
+  <fieldset class="field">
+    <legend>Картинка</legend>
+    <div class="image-picker">
+      <% Article::IMAGES.each do |name, path| %>
+        <label class="image-option">
+          <%= f.radio_button :image, path %>
+          <%= image_tag path, alt: name %>
+        </label>
+      <% end %>
+    </div>
+  </fieldset>
+
+  <div class="field">
+    <%= f.label :body, "Текст" %>
+    <%= f.text_area :body, rows: 14 %>
+    <small>Подзаголовок раздела начинается с «## », код оборачивается в ```</small>
+  </div>
+
+  <div class="admin-form-actions">
+    <%= f.submit "Сохранить", class: "btn btn-primary" %>
+    <%= link_to "Отмена", admin_articles_path, class: "link-muted" %>
+  </div>
+<% end %>

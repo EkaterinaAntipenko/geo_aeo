@@ -1,0 +1,27 @@
+<% content_for :title, "#{@article.title} - Okula" %>
+<% breadcrumbs(["Советы", articles_path], [@article.title]) %>
+
+<div class="article-layout">
+  <article class="article appear">
+    <h1><%= @article.title %></h1>
+    <p class="article-meta"><%= @article.category.name %> · <%= @article.read_time %> мин</p>
+    <%= image_tag @article.image, alt: "", class: "article-img float-img" %>
+    <div class="article-body">
+      <%= article_body @article %>
+    </div>
+
+    <%= form_with url: tasks_path, class: "article-actions" do %>
+      <%= hidden_field_tag :title, @article.title %>
+      <%= submit_tag "Добавить в задачи", class: "btn btn-light" %>
+      <%= link_to "Все советы", articles_path, class: "link-muted" %>
+    <% end %>
+  </article>
+
+  <% if @article.headings.any? %>
+    <aside class="toc appear">
+      <% @article.headings.each_with_index do |heading, i| %>
+        <%= link_to heading, "#part-#{i + 1}", class: class_names("toc-link", active: i.zero?) %>
+      <% end %>
+    </aside>
+  <% end %>
+</div>

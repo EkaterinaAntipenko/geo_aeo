@@ -1,0 +1,7 @@
+<% content_for :title, "Категория - Okula" %>
+<% breadcrumbs(["Админка", admin_root_path], [@category.name]) %>
+
+<section class="panel admin-panel appear">
+  <h1 class="card-title">Редактирование категории</h1>
+  <%= render "form", category: @category %>
+</section>

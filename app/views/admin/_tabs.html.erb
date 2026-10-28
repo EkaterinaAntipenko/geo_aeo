@@ -1,0 +1,4 @@
+<nav class="chips admin-tabs">
+  <%= link_to "Советы", admin_articles_path, class: class_names("chip", active: controller_name == "articles") %>
+  <%= link_to "Категории", admin_categories_path, class: class_names("chip", active: controller_name == "categories") %>
+</nav>

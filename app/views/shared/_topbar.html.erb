@@ -1,0 +1,15 @@
+<header class="topbar">
+  <label for="nav-toggle" class="burger" aria-label="Меню"><i></i><i></i><i></i></label>
+  <div class="topbar-logo"><%= render "shared/logo" %></div>
+
+  <%= form_with url: conversations_path, class: "ask-bar" do %>
+    <button type="submit" class="ask-icon" aria-label="Спросить"><%= image_tag "okula/icon-ask.svg", alt: "" %></button>
+    <%= text_field_tag :question, nil, placeholder: "Спроси о чем-либо", autocomplete: "off" %>
+  <% end %>
+
+  <%= render "shared/notifications" %>
+
+  <%= link_to account_path, class: "avatar-link", aria: { label: "Настройки профиля" } do %>
+    <%= user_avatar current_user %>
+  <% end %>
+</header>

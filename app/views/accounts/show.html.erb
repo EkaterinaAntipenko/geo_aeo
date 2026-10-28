@@ -1,45 +1,106 @@
-<h1><%= @workspace.name %></h1>
+<% content_for :title, "Настройки - Okula" %>
+<% breadcrumbs(["Настройки"]) %>
 
-<p>
-  <strong>Юр. лицо:</strong>
-  <%= @workspace.legal_name %>
-</p>
+<div class="settings">
+  <section class="panel profile appear">
+    <div class="profile-main">
+      <%= user_avatar current_user, size: "lg" %>
+      <div>
+        <h1><%= current_user.name %></h1>
+        <p class="muted"><%= current_user.role_name %></p>
+      </div>
+    </div>
+    <div class="profile-field">
+      <span>Email</span>
+      <p class="muted"><%= current_user.email %></p>
+    </div>
+    <div class="profile-field">
+      <span>Роль</span>
+      <p class="muted"><%= current_user.role_name %></p>
+    </div>
+    <%= link_to edit_profile_path, class: "profile-edit", aria: { label: "Редактировать профиль" } do %>
+      <%= image_tag "okula/pencil.svg", alt: "" %>
+    <% end %>
+  </section>
 
-<p>
-  <strong>Сфера:</strong>
-  <%= @workspace.industry %>
-</p>
+  <div class="settings-col">
+    <section class="panel plan appear">
+      <div class="plan-head">
+        <h2 class="card-title">Мой тариф</h2>
+        <% if @subscription %>
+          <span class="badge-status badge-<%= @subscription.status %>"><%= @subscription.status == "trial" ? "Пробный" : "Активен" %></span>
+        <% end %>
+      </div>
 
-<p>
-  <strong>Регион:</strong>
-  <%= @workspace.region %>
-</p>
+      <% if @subscription %>
+        <% plan = @subscription.plan %>
+        <div class="plan-price">
+          <p><span class="muted">Тариф:</span> <b><%= plan.name %></b></p>
+          <p><b><%= rubles plan.price_month %> / месяц</b></p>
+        </div>
 
-<h2>Команда</h2>
+        <div class="usage">
+          <p><span>Сайты</span><span><%= @sites.size %>/<%= plan.domains_limit %></span></p>
+          <div class="progress"><i style="width: <%= [ @sites.size * 100 / plan.domains_limit, 100 ].min %>%"></i></div>
+        </div>
 
-<% @workspace.memberships.each do |membership| %>
-  <p><%= membership.user.name %> - <%= membership.role %></p>
-<% end %>
+        <div class="usage">
+          <p><span>Запросы к ИИ-помощнику</span><span><%= @requests_count %>/<%= plan.queries_limit %></span></p>
+          <div class="progress"><i style="width: <%= [ @requests_count * 100 / plan.queries_limit, 100 ].min %>%"></i></div>
+        </div>
+      <% else %>
+        <p class="empty-text">Тариф появится, когда вы подключите первый сайт.</p>
+      <% end %>
 
-<h2>Тариф</h2>
+      <%= link_to "Управлять тарифом", plans_path, class: "btn btn-outline" %>
+    </section>
 
-<p>
-  <strong><%= @subscription.plan.name %></strong>,
-  <%= @subscription.plan.price_month %> ₽ в месяц,
-  статус: <%= @subscription.status %>
-</p>
+    <section class="panel security appear">
+      <h2 class="card-title">Безопасность аккаунта</h2>
+      <p class="security-row">
+        <span>E-mail подтверждён</span>
+        <span class="check-ok"><%= image_tag "okula/checkmark.svg", alt: "да" %></span>
+      </p>
+      <p class="security-row">
+        <span>Пароль</span>
+        <%= link_to edit_password_path, class: "round-arrow", aria: { label: "Сменить пароль" } do %>
+          <%= image_tag "okula/arrow-circle.svg", alt: "" %>
+        <% end %>
+      </p>
+    </section>
+  </div>
 
-<ul>
-  <% @subscription.plan.features.each do |feature| %>
-    <li><%= feature %></li>
-  <% end %>
-</ul>
+  <div class="settings-col">
+    <section class="panel connect appear" data-controller="clipboard">
+      <h2 class="card-title">Подключение сайта</h2>
+      <p>Вставьте код перед закрывающим тегом &lt;/head&gt;</p>
 
-<h2>Платежи</h2>
+      <div class="snippet">
+        <pre data-clipboard-target="source"><span class="c-tag">&lt;script</span> async
+  <span class="c-tag">src=</span><span class="c-str">"https://cdn.okula.example/agent.js"</span>
+  <span class="c-tag">data-site=</span><span class="c-str">"<%= current_site ? "OK-#{current_site.id.to_s.rjust(6, '0')}" : "YOUR_SITE_ID" %>"</span><span class="c-tag">&gt;&lt;/script&gt;</span></pre>
+        <button type="button" class="copy-btn" data-action="clipboard#copy" aria-label="Скопировать код">
+          <%= image_tag "okula/copy.svg", alt: "" %>
+        </button>
+      </div>
 
-<% @subscription.payments.each do |payment| %>
-  <p>
-    <%= payment.paid_at.strftime("%d.%m.%Y") %>:
-    <%= payment.amount %> <%= payment.currency %>, <%= payment.status %>
-  </p>
-<% end %>
+      <div class="connect-actions">
+        <%= button_to "Проверить подключение", check_connection_account_path, class: "btn btn-primary" %>
+        <%= link_to "Инструкция по установке", install_path, class: "link-muted" %>
+      </div>
+    </section>
+
+    <section class="panel sites-list appear">
+      <h2 class="card-title">Подключённые сайты</h2>
+      <% @sites.each do |site| %>
+        <div class="site-row <%= 'active' if site == current_site %>">
+          <%= button_to site.domain, select_site_path(site), class: "site-row-name" %>
+          <%= link_to install_path, class: "site-row-gear", aria: { label: "Настройки сайта" } do %>
+            <%= image_tag "okula/gear.svg", alt: "" %>
+          <% end %>
+        </div>
+      <% end %>
+      <%= link_to "+ Подключить сайт", new_onboarding_path, class: "link-muted" %>
+    </section>
+  </div>
+</div>
